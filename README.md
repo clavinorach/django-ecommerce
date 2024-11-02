@@ -139,5 +139,5 @@ For Sandbox mode:
 
 ## Contact
 If you have any questions or issues, feel free to reach out:
-- **GitHub**: [Clavino Ourizqi Rachmadi](https://github.com/clavinorach)
-- **LinkedIn**: [Clavino Ourizqi Rachmadi](https://www.linkedin.com/in/clavinorachmadi/)
+- **GitHub**: [Github](https://github.com/clavinorach)
+- **LinkedIn**: [LinkedIn](https://www.linkedin.com/in/clavinorachmadi/)
