@@ -2,8 +2,24 @@ import os
 import django_heroku
 import dj_database_url
 from decouple import config
-
+from dotenv import load_dotenv
 from pathlib import Path
+import environ
+
+load_dotenv()  # Load environment variables from .env
+# Initialize environment variables
+
+env = environ.Env()
+environ.Env.read_env()  # Reads the .env file
+
+# Secret Key
+SECRET_KEY = env('SECRET_KEY', default='fallback_secret_key')
+
+# Debug
+DEBUG = env.bool('DEBUG', default=False)
+
+# Check if running on Heroku
+IS_HEROKU = env.bool('IS_HEROKU', default=False)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -126,7 +142,7 @@ if IS_HEROKU:
         'default': dj_database_url.config(
             default=config('DATABASE_URL'),
             conn_max_age=600,
-            ssl_require=True
+            ssl_require=config('SSL_REQUIRE', cast=bool, default=False)
         )
     }
 else:
@@ -135,10 +151,13 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': config('DB_NAME', default='django_ecommerce'),
-            'USER': config('DB_USER', default='postgres'),
+            'USER': config('DB_USER', default=  'postgres'),
             'PASSWORD': config('DB_PASSWORD', default='your_password'),
             'HOST': config('DB_HOST', default='localhost'),
             'PORT': config('DB_PORT', default='5432'),
+            'OPTIONS': {
+                'sslmode': 'disable',  # This disables SSL for local
+        },
         }
     }
 
@@ -204,7 +223,8 @@ EMAIL_PORT = '587'
 EMAIL_USE_TLS = 'True'
 
 #Heroku
-django_heroku.settings(locals())
+db_from_env = dj_database_url.config(conn_max_age=0, ssl_require=False)
+django_heroku.settings(locals() ,databases=False)
 
 # Be sure to read the guide in the resources folder of this (SETUP THE EMAIL BACKEND)
 
