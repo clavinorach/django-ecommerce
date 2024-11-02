@@ -39,7 +39,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['zara-ecommerce.herokuapp.com', 'localhost', '127.0.0.1']
 
-CSRF_TRUSTED_ORIGINS = ['https://zara-ecommerce.herokuapp.com', 'https://hooks.zapier.com']
+CSRF_TRUSTED_ORIGINS = ['https://zara-ecommerce.herokuapp.com']
 
 
 CSRF_TRUSTED_ORIGINS = ['https://hooks.zapier.com']
@@ -230,18 +230,6 @@ django_heroku.settings(locals() ,databases=False)
 
 EMAIL_HOST_USER = config('EMAIL_HOST_USER') # - Enter your GMAIL address # The host email that sends password reset emails
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD') # - Enter your app password 
-
-ZAPIER_TRIGGER = {
-    'STRICT_MODE': True,
-    'TRIGGERS': {
-        'order_completed': 'payment.zapier_triggers.order_completed_trigger',
-    }
-}
-
-
-ZAPIER_TRIGGER_HOOKS = {
-    'order_successful': 'https://hooks.zapier.com/hooks/catch/20581924/29ecxxy/',
-}
 
 
 
