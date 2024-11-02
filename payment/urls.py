@@ -15,6 +15,8 @@ urlpatterns = [
 
     path('payment-failed', views.payment_failed, name='payment-failed'),
 
+    # path('webhook/zapier/', views.zapier_webhook, name='zapier-webhook'),
+
 ]
 
 

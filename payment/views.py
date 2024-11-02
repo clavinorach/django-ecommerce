@@ -135,14 +135,6 @@ def complete_order(request):
 
 
 
-
-
-
-    
-
-
-
-
 def payment_success(request):
 
 
@@ -168,12 +160,3 @@ def payment_success(request):
 def payment_failed(request):
 
     return render(request, 'payment/payment-failed.html')
-
-
-
-
-
-
-
-
-

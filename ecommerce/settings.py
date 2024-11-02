@@ -1,4 +1,7 @@
-
+import os
+import django_heroku
+import dj_database_url
+from decouple import config
 
 from pathlib import Path
 
@@ -23,7 +26,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 
-#CSRF_TRUSTED_ORIGINS = ['https://www.edenthought.com']
+CSRF_TRUSTED_ORIGINS = ['https://hooks.zapier.com']
 
 
 # Set allowed cidr nets
@@ -55,7 +58,6 @@ INSTALLED_APPS = [
 
     'storages',
 
-
 ]
 
 # To un-block PayPal popups - NB!
@@ -81,6 +83,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'ecommerce.urls'
@@ -113,8 +116,12 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'django_ecommerce',
+        'USER': 'postgres',
+        'PASSWORD': 'clavino185',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -158,6 +165,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 
@@ -178,10 +186,26 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = '587'
 EMAIL_USE_TLS = 'True'
 
+#Heroku
+django_heroku.settings(locals())
+
 # Be sure to read the guide in the resources folder of this (SETUP THE EMAIL BACKEND)
 
-EMAIL_HOST_USER = '' # - Enter your GMAIL address # The host email that sends password reset emails
-EMAIL_HOST_PASSWORD = '' # - Enter your app password 
+EMAIL_HOST_USER = config('EMAIL_HOST_USER') # - Enter your GMAIL address # The host email that sends password reset emails
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD') # - Enter your app password 
+
+ZAPIER_TRIGGER = {
+    'STRICT_MODE': True,
+    'TRIGGERS': {
+        'order_completed': 'payment.zapier_triggers.order_completed_trigger',
+    }
+}
+
+
+ZAPIER_TRIGGER_HOOKS = {
+    'order_successful': 'https://hooks.zapier.com/hooks/catch/20581924/29ecxxy/',
+}
+
 
 
 # AWS credentials:
