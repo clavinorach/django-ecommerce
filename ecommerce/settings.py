@@ -39,7 +39,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['zara-ecommerce.herokuapp.com', 'localhost', '127.0.0.1']
 
-CSRF_TRUSTED_ORIGINS = ['https://zara-ecommerce.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = ['https://api.monday.com', 'https://zara-ecommerce.herokuapp.com']
 
 
 CSRF_TRUSTED_ORIGINS = ['https://hooks.zapier.com']
