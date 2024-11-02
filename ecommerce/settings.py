@@ -21,9 +21,9 @@ SECRET_KEY = 'django-insecure-olc_l4v9uimldmd)xjf0qcgbl#f3zyln(b##@b26_&2q_oo@_d
 
 DEBUG = True
 
-#ALLOWED_HOSTS = ['mywebsite.com', 'www.mywebsite.com', 'localhost', '127.0.0.1', '*']
+ALLOWED_HOSTS = ['zara-ecommerce.herokuapp.com', 'localhost', '127.0.0.1']
 
-ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['https://zara-ecommerce.herokuapp.com', 'https://hooks.zapier.com']
 
 
 CSRF_TRUSTED_ORIGINS = ['https://hooks.zapier.com']
@@ -77,13 +77,13 @@ MIDDLEWARE = [
     #'allow_cidr.middleware.AllowCIDRMiddleware',
 
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'ecommerce.urls'
@@ -114,15 +114,23 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': config('DB_NAME'),
+#         'USER': config('DB_USER'),
+#         'PASSWORD': config('DB_PASSWORD'),
+#         'HOST': config('DB_HOST'),
+#         'PORT': config('DB_PORT', default='5432'),
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_ecommerce',
-        'USER': 'postgres',
-        'PASSWORD': 'clavino185',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        default='postgres://localhost',
+        conn_max_age=600,
+        ssl_require=True if os.getenv('HEROKU') else False
+    )
 }
 
 
@@ -160,7 +168,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-
+STATIC_ROOT = BASE_DIR / 'staticfiles'  
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
