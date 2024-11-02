@@ -39,10 +39,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['zara-ecommerce.herokuapp.com', 'localhost', '127.0.0.1']
 
-CSRF_TRUSTED_ORIGINS = ['https://api.monday.com', 'https://zara-ecommerce.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = ['https://api.monday.com', 'https://clavstore-64046c39967a.herokuapp.com/']
 
 
-CSRF_TRUSTED_ORIGINS = ['https://hooks.zapier.com']
 
 
 # Set allowed cidr nets
@@ -76,6 +75,8 @@ INSTALLED_APPS = [
 
     'storages',
 
+    'corsheaders',
+
 ]
 
 # To un-block PayPal popups - NB!
@@ -102,6 +103,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "https://api.monday.com",
 ]
 
 ROOT_URLCONF = 'ecommerce.urls'
