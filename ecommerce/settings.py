@@ -56,6 +56,8 @@ INSTALLED_APPS = [
 
     'crispy_forms', # Crispy forms
 
+    'crispy_bootstrap4',
+
     'storages',
 
 ]
@@ -129,7 +131,7 @@ if IS_HEROKU:
     }
 else:
     # Local environment: use local PostgreSQL settings
-    DATABASES = {
+    DATABASES = {   
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': config('DB_NAME', default='django_ecommerce'),
