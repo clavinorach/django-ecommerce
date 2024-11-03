@@ -132,6 +132,16 @@ For Sandbox mode:
 - **Test credit card details**:
   - **Dummy card**: `4032032685528157`
   - **Dummy phone number**: `203-555-0134`
+  - 
+
+## Summary of Automation Tools and Workflows
+This project integrates Monday.com with the Clavstore eCommerce platform to automate user registration management. Below is a summary of the key tools and workflows used for this automation.
+![1103 (1)](https://github.com/user-attachments/assets/18c27f69-1e1c-422d-b389-affab4142bb5)
+
+**Automation Tools**
+  - Monday.com API: Used to create and manage user entries in a dedicated board on Monday.com for each new registration from Clavstore. The API allows for seamless data transfer between Clavstore and Monday.com.
+  - Django Backend: Clavstore’s backend, built with Django, handles user registrations and triggers the API calls to Monday.com upon successful registration.
+
 
 ## Additional Notes
 - **AWS Integration**: The app is pre-configured for AWS services (Amazon S3, Amazon RDS), but those features are currently turned off. You can enable them by providing the necessary credentials in your `.env` file.
